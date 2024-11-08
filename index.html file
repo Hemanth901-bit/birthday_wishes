@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, [sangeetha]!</title>
+    <style>
+        /* Basic reset and full-screen background */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #000; overflow: hidden; font-family: Arial, sans-serif; color: #ffffff; }
+        
+        /* Centered main message styling */
+        #message {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff69b4;
+            font-size: 3em;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 3s ease forwards;
+        }
+
+        /* Paragraph styling */
+        #paragraph {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 1.2em;
+            max-width: 80%;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 3s 3s ease forwards; /* Delayed fade-in for paragraph */
+            line-height: 1.6em;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="message">Happy Birthday, [sangeetha]!</div>
+
+<div id="paragraph">
+    [Her Name], you are the light that brightens every moment, and your presence fills every heart with warmth and joy. 
+    Your laughter is the melody that makes life beautiful, and your kindness touches everyone you meet. 
+    Today, we celebrate not just your birthday, but the wonderful person you are and the love you spread in the world. 
+    May this year be filled with laughter, dreams fulfilled, and countless magical moments. Here’s to you, to your endless grace, and to all the happiness that awaits you. 
+    Happy Birthday, beautiful soul!
+</div>
+
+<script>
+    // Fireworks function using canvas
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Firework {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.radius = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 4 - 2;
+            this.speedY = Math.random() * 4 - 2;
+            this.alpha = 1;
+            this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.alpha -= 0.02;
+        }
+
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    const fireworks = [];
+
+    function animate() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+            fireworks[i].update();
+            fireworks[i].draw();
+            if (fireworks[i].alpha <= 0) {
+                fireworks.splice(i, 1);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    // Generate fireworks on touch or click
+    window.addEventListener('click', (e) => {
+        for (let i = 0; i < 20; i++) {
+            fireworks.push(new Firework(e.clientX, e.clientY));
+        }
+    });
+
+    // Start the animation
+    animate();
+</script>
+
+</body>
+</html>
